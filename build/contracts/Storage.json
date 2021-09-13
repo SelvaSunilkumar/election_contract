@@ -1,0 +1,1125 @@
+{
+  "contractName": "Storage",
+  "abi": [
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "position",
+          "type": "uint256"
+        },
+        {
+          "internalType": "bool",
+          "name": "flag",
+          "type": "bool"
+        }
+      ],
+      "name": "store",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "position",
+          "type": "uint256"
+        }
+      ],
+      "name": "retrieve",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    }
+  ],
+  "metadata": "{\"compiler\":{\"version\":\"0.5.16+commit.9c3226ce\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"constant\":true,\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"position\",\"type\":\"uint256\"}],\"name\":\"retrieve\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"position\",\"type\":\"uint256\"},{\"internalType\":\"bool\",\"name\":\"flag\",\"type\":\"bool\"}],\"name\":\"store\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"}],\"devdoc\":{\"methods\":{}},\"userdoc\":{\"methods\":{}}},\"settings\":{\"compilationTarget\":{\"project:/contracts/Storage.sol\":\"Storage\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"project:/contracts/Storage.sol\":{\"keccak256\":\"0x0e21c3de2d0645bd5cb3d99f17969f125172519c2846fd16450e1d7284609af1\",\"urls\":[\"bzz-raw://0feca6f630b55e0c0792bc32b753f69261876a4e5d29c9f7ab73aa3ed2ac5f7a\",\"dweb:/ipfs/Qmc597GYbn4cyZ9Q88ijKpVKtogtu7Dft51aMyu1F5tEjL\"]}},\"version\":1}",
+  "bytecode": "0x608060405234801561001057600080fd5b5061016d806100206000396000f3fe608060405234801561001057600080fd5b50600436106100365760003560e01c80638f88708b1461003b5780639f2a438714610081575b600080fd5b6100676004803603602081101561005157600080fd5b81019080803590602001909291905050506100d3565b604051808215151515815260200191505060405180910390f35b6100b96004803603604081101561009757600080fd5b81019080803590602001909291908035151590602001909291905050506100ff565b604051808215151515815260200191505060405180910390f35b600080600083815260200190815260200160002060000160009054906101000a900460ff169050919050565b60008160008085815260200190815260200160002060000160006101000a81548160ff021916908315150217905550600190509291505056fea265627a7a7231582099f9ea6cdf30900dcbe88422f373a5e55afff4d5f03d216752b2d8c6be1a858564736f6c63430005100032",
+  "deployedBytecode": "0x608060405234801561001057600080fd5b50600436106100365760003560e01c80638f88708b1461003b5780639f2a438714610081575b600080fd5b6100676004803603602081101561005157600080fd5b81019080803590602001909291905050506100d3565b604051808215151515815260200191505060405180910390f35b6100b96004803603604081101561009757600080fd5b81019080803590602001909291908035151590602001909291905050506100ff565b604051808215151515815260200191505060405180910390f35b600080600083815260200190815260200160002060000160009054906101000a900460ff169050919050565b60008160008085815260200190815260200160002060000160006101000a81548160ff021916908315150217905550600190509291505056fea265627a7a7231582099f9ea6cdf30900dcbe88422f373a5e55afff4d5f03d216752b2d8c6be1a858564736f6c63430005100032",
+  "sourceMap": "62:372:2:-;;;;8:9:-1;5:2;;;30:1;27;20:12;5:2;62:372:2;;;;;;;",
+  "deployedSourceMap": "62:372:2:-;;;;8:9:-1;5:2;;;30:1;27;20:12;5:2;62:372:2;;;;;;;;;;;;;;;;;;;;;;;;322:109;;;;;;13:2:-1;8:3;5:11;2:2;;;29:1;26;19:12;2:2;322:109:2;;;;;;;;;;;;;;;;;:::i;:::-;;;;;;;;;;;;;;;;;;;;;;;176:134;;;;;;13:2:-1;8:3;5:11;2:2;;;29:1;26;19:12;2:2;176:134:2;;;;;;;;;;;;;;;;;;;;;;;;;;;;:::i;:::-;;;;;;;;;;;;;;;;;;;;;;;322:109;378:4;402;:14;407:8;402:14;;;;;;;;;;;:21;;;;;;;;;;;;395:28;;322:109;;;:::o;176:134::-;235:4;276;252;:14;257:8;252:14;;;;;;;;;;;:21;;;:28;;;;;;;;;;;;;;;;;;298:4;291:11;;176:134;;;;:::o",
+  "source": "// SPDX-License-Identifier: MIT\r\npragma solidity >=0.5.16;\r\n\r\ncontract Storage {\r\n\r\n    struct data {\r\n        bool isdata;\r\n    }\r\n\r\n    mapping(uint256 => data) hmap;\r\n\r\n    function store(uint256 position, bool flag) public returns(bool) {\r\n        hmap[position].isdata = flag;\r\n        return true;\r\n    }\r\n    \r\n    function retrieve(uint256 position) public view returns(bool) {\r\n        return hmap[position].isdata;\r\n    }\r\n}",
+  "sourcePath": "C:\\Users\\Hp\\Documents\\bc-capstone\\contracts\\Storage.sol",
+  "ast": {
+    "absolutePath": "project:/contracts/Storage.sol",
+    "exportedSymbols": {
+      "Storage": [
+        831
+      ]
+    },
+    "id": 832,
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 791,
+        "literals": [
+          "solidity",
+          ">=",
+          "0.5",
+          ".16"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "33:25:2"
+      },
+      {
+        "baseContracts": [],
+        "contractDependencies": [],
+        "contractKind": "contract",
+        "documentation": null,
+        "fullyImplemented": true,
+        "id": 831,
+        "linearizedBaseContracts": [
+          831
+        ],
+        "name": "Storage",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "canonicalName": "Storage.data",
+            "id": 794,
+            "members": [
+              {
+                "constant": false,
+                "id": 793,
+                "name": "isdata",
+                "nodeType": "VariableDeclaration",
+                "scope": 794,
+                "src": "111:11:2",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_bool",
+                  "typeString": "bool"
+                },
+                "typeName": {
+                  "id": 792,
+                  "name": "bool",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "111:4:2",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bool",
+                    "typeString": "bool"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              }
+            ],
+            "name": "data",
+            "nodeType": "StructDefinition",
+            "scope": 831,
+            "src": "88:42:2",
+            "visibility": "public"
+          },
+          {
+            "constant": false,
+            "id": 798,
+            "name": "hmap",
+            "nodeType": "VariableDeclaration",
+            "scope": 831,
+            "src": "138:29:2",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_data_$794_storage_$",
+              "typeString": "mapping(uint256 => struct Storage.data)"
+            },
+            "typeName": {
+              "id": 797,
+              "keyType": {
+                "id": 795,
+                "name": "uint256",
+                "nodeType": "ElementaryTypeName",
+                "src": "146:7:2",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                }
+              },
+              "nodeType": "Mapping",
+              "src": "138:24:2",
+              "typeDescriptions": {
+                "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_data_$794_storage_$",
+                "typeString": "mapping(uint256 => struct Storage.data)"
+              },
+              "valueType": {
+                "contractScope": null,
+                "id": 796,
+                "name": "data",
+                "nodeType": "UserDefinedTypeName",
+                "referencedDeclaration": 794,
+                "src": "157:4:2",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_struct$_data_$794_storage_ptr",
+                  "typeString": "struct Storage.data"
+                }
+              }
+            },
+            "value": null,
+            "visibility": "internal"
+          },
+          {
+            "body": {
+              "id": 816,
+              "nodeType": "Block",
+              "src": "241:69:2",
+              "statements": [
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "id": 812,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "leftHandSide": {
+                      "argumentTypes": null,
+                      "expression": {
+                        "argumentTypes": null,
+                        "baseExpression": {
+                          "argumentTypes": null,
+                          "id": 807,
+                          "name": "hmap",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 798,
+                          "src": "252:4:2",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_data_$794_storage_$",
+                            "typeString": "mapping(uint256 => struct Storage.data storage ref)"
+                          }
+                        },
+                        "id": 809,
+                        "indexExpression": {
+                          "argumentTypes": null,
+                          "id": 808,
+                          "name": "position",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 800,
+                          "src": "257:8:2",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_uint256",
+                            "typeString": "uint256"
+                          }
+                        },
+                        "isConstant": false,
+                        "isLValue": true,
+                        "isPure": false,
+                        "lValueRequested": false,
+                        "nodeType": "IndexAccess",
+                        "src": "252:14:2",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_struct$_data_$794_storage",
+                          "typeString": "struct Storage.data storage ref"
+                        }
+                      },
+                      "id": 810,
+                      "isConstant": false,
+                      "isLValue": true,
+                      "isPure": false,
+                      "lValueRequested": true,
+                      "memberName": "isdata",
+                      "nodeType": "MemberAccess",
+                      "referencedDeclaration": 793,
+                      "src": "252:21:2",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_bool",
+                        "typeString": "bool"
+                      }
+                    },
+                    "nodeType": "Assignment",
+                    "operator": "=",
+                    "rightHandSide": {
+                      "argumentTypes": null,
+                      "id": 811,
+                      "name": "flag",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 802,
+                      "src": "276:4:2",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_bool",
+                        "typeString": "bool"
+                      }
+                    },
+                    "src": "252:28:2",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    }
+                  },
+                  "id": 813,
+                  "nodeType": "ExpressionStatement",
+                  "src": "252:28:2"
+                },
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "hexValue": "74727565",
+                    "id": 814,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": true,
+                    "kind": "bool",
+                    "lValueRequested": false,
+                    "nodeType": "Literal",
+                    "src": "298:4:2",
+                    "subdenomination": null,
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    },
+                    "value": "true"
+                  },
+                  "functionReturnParameters": 806,
+                  "id": 815,
+                  "nodeType": "Return",
+                  "src": "291:11:2"
+                }
+              ]
+            },
+            "documentation": null,
+            "id": 817,
+            "implemented": true,
+            "kind": "function",
+            "modifiers": [],
+            "name": "store",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 803,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 800,
+                  "name": "position",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 817,
+                  "src": "191:16:2",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 799,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "191:7:2",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 802,
+                  "name": "flag",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 817,
+                  "src": "209:9:2",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bool",
+                    "typeString": "bool"
+                  },
+                  "typeName": {
+                    "id": 801,
+                    "name": "bool",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "209:4:2",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "190:29:2"
+            },
+            "returnParameters": {
+              "id": 806,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 805,
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 817,
+                  "src": "235:4:2",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bool",
+                    "typeString": "bool"
+                  },
+                  "typeName": {
+                    "id": 804,
+                    "name": "bool",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "235:4:2",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "234:6:2"
+            },
+            "scope": 831,
+            "src": "176:134:2",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
+            "visibility": "public"
+          },
+          {
+            "body": {
+              "id": 829,
+              "nodeType": "Block",
+              "src": "384:47:2",
+              "statements": [
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "expression": {
+                      "argumentTypes": null,
+                      "baseExpression": {
+                        "argumentTypes": null,
+                        "id": 824,
+                        "name": "hmap",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 798,
+                        "src": "402:4:2",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_data_$794_storage_$",
+                          "typeString": "mapping(uint256 => struct Storage.data storage ref)"
+                        }
+                      },
+                      "id": 826,
+                      "indexExpression": {
+                        "argumentTypes": null,
+                        "id": 825,
+                        "name": "position",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 819,
+                        "src": "407:8:2",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_uint256",
+                          "typeString": "uint256"
+                        }
+                      },
+                      "isConstant": false,
+                      "isLValue": true,
+                      "isPure": false,
+                      "lValueRequested": false,
+                      "nodeType": "IndexAccess",
+                      "src": "402:14:2",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_struct$_data_$794_storage",
+                        "typeString": "struct Storage.data storage ref"
+                      }
+                    },
+                    "id": 827,
+                    "isConstant": false,
+                    "isLValue": true,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "memberName": "isdata",
+                    "nodeType": "MemberAccess",
+                    "referencedDeclaration": 793,
+                    "src": "402:21:2",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    }
+                  },
+                  "functionReturnParameters": 823,
+                  "id": 828,
+                  "nodeType": "Return",
+                  "src": "395:28:2"
+                }
+              ]
+            },
+            "documentation": null,
+            "id": 830,
+            "implemented": true,
+            "kind": "function",
+            "modifiers": [],
+            "name": "retrieve",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 820,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 819,
+                  "name": "position",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 830,
+                  "src": "340:16:2",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 818,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "340:7:2",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "339:18:2"
+            },
+            "returnParameters": {
+              "id": 823,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 822,
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 830,
+                  "src": "378:4:2",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bool",
+                    "typeString": "bool"
+                  },
+                  "typeName": {
+                    "id": 821,
+                    "name": "bool",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "378:4:2",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "377:6:2"
+            },
+            "scope": 831,
+            "src": "322:109:2",
+            "stateMutability": "view",
+            "superFunction": null,
+            "visibility": "public"
+          }
+        ],
+        "scope": 832,
+        "src": "62:372:2"
+      }
+    ],
+    "src": "33:401:2"
+  },
+  "legacyAST": {
+    "attributes": {
+      "absolutePath": "project:/contracts/Storage.sol",
+      "exportedSymbols": {
+        "Storage": [
+          831
+        ]
+      }
+    },
+    "children": [
+      {
+        "attributes": {
+          "literals": [
+            "solidity",
+            ">=",
+            "0.5",
+            ".16"
+          ]
+        },
+        "id": 791,
+        "name": "PragmaDirective",
+        "src": "33:25:2"
+      },
+      {
+        "attributes": {
+          "baseContracts": [
+            null
+          ],
+          "contractDependencies": [
+            null
+          ],
+          "contractKind": "contract",
+          "documentation": null,
+          "fullyImplemented": true,
+          "linearizedBaseContracts": [
+            831
+          ],
+          "name": "Storage",
+          "scope": 832
+        },
+        "children": [
+          {
+            "attributes": {
+              "canonicalName": "Storage.data",
+              "name": "data",
+              "scope": 831,
+              "visibility": "public"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "constant": false,
+                  "name": "isdata",
+                  "scope": 794,
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "type": "bool",
+                  "value": null,
+                  "visibility": "internal"
+                },
+                "children": [
+                  {
+                    "attributes": {
+                      "name": "bool",
+                      "type": "bool"
+                    },
+                    "id": 792,
+                    "name": "ElementaryTypeName",
+                    "src": "111:4:2"
+                  }
+                ],
+                "id": 793,
+                "name": "VariableDeclaration",
+                "src": "111:11:2"
+              }
+            ],
+            "id": 794,
+            "name": "StructDefinition",
+            "src": "88:42:2"
+          },
+          {
+            "attributes": {
+              "constant": false,
+              "name": "hmap",
+              "scope": 831,
+              "stateVariable": true,
+              "storageLocation": "default",
+              "type": "mapping(uint256 => struct Storage.data)",
+              "value": null,
+              "visibility": "internal"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "type": "mapping(uint256 => struct Storage.data)"
+                },
+                "children": [
+                  {
+                    "attributes": {
+                      "name": "uint256",
+                      "type": "uint256"
+                    },
+                    "id": 795,
+                    "name": "ElementaryTypeName",
+                    "src": "146:7:2"
+                  },
+                  {
+                    "attributes": {
+                      "contractScope": null,
+                      "name": "data",
+                      "referencedDeclaration": 794,
+                      "type": "struct Storage.data"
+                    },
+                    "id": 796,
+                    "name": "UserDefinedTypeName",
+                    "src": "157:4:2"
+                  }
+                ],
+                "id": 797,
+                "name": "Mapping",
+                "src": "138:24:2"
+              }
+            ],
+            "id": 798,
+            "name": "VariableDeclaration",
+            "src": "138:29:2"
+          },
+          {
+            "attributes": {
+              "documentation": null,
+              "implemented": true,
+              "isConstructor": false,
+              "kind": "function",
+              "modifiers": [
+                null
+              ],
+              "name": "store",
+              "scope": 831,
+              "stateMutability": "nonpayable",
+              "superFunction": null,
+              "visibility": "public"
+            },
+            "children": [
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "name": "position",
+                      "scope": 817,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "uint256",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "uint256",
+                          "type": "uint256"
+                        },
+                        "id": 799,
+                        "name": "ElementaryTypeName",
+                        "src": "191:7:2"
+                      }
+                    ],
+                    "id": 800,
+                    "name": "VariableDeclaration",
+                    "src": "191:16:2"
+                  },
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "name": "flag",
+                      "scope": 817,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "bool",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "bool",
+                          "type": "bool"
+                        },
+                        "id": 801,
+                        "name": "ElementaryTypeName",
+                        "src": "209:4:2"
+                      }
+                    ],
+                    "id": 802,
+                    "name": "VariableDeclaration",
+                    "src": "209:9:2"
+                  }
+                ],
+                "id": 803,
+                "name": "ParameterList",
+                "src": "190:29:2"
+              },
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "name": "",
+                      "scope": 817,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "bool",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "bool",
+                          "type": "bool"
+                        },
+                        "id": 804,
+                        "name": "ElementaryTypeName",
+                        "src": "235:4:2"
+                      }
+                    ],
+                    "id": 805,
+                    "name": "VariableDeclaration",
+                    "src": "235:4:2"
+                  }
+                ],
+                "id": 806,
+                "name": "ParameterList",
+                "src": "234:6:2"
+              },
+              {
+                "children": [
+                  {
+                    "children": [
+                      {
+                        "attributes": {
+                          "argumentTypes": null,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "lValueRequested": false,
+                          "operator": "=",
+                          "type": "bool"
+                        },
+                        "children": [
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "isConstant": false,
+                              "isLValue": true,
+                              "isPure": false,
+                              "lValueRequested": true,
+                              "member_name": "isdata",
+                              "referencedDeclaration": 793,
+                              "type": "bool"
+                            },
+                            "children": [
+                              {
+                                "attributes": {
+                                  "argumentTypes": null,
+                                  "isConstant": false,
+                                  "isLValue": true,
+                                  "isPure": false,
+                                  "lValueRequested": false,
+                                  "type": "struct Storage.data storage ref"
+                                },
+                                "children": [
+                                  {
+                                    "attributes": {
+                                      "argumentTypes": null,
+                                      "overloadedDeclarations": [
+                                        null
+                                      ],
+                                      "referencedDeclaration": 798,
+                                      "type": "mapping(uint256 => struct Storage.data storage ref)",
+                                      "value": "hmap"
+                                    },
+                                    "id": 807,
+                                    "name": "Identifier",
+                                    "src": "252:4:2"
+                                  },
+                                  {
+                                    "attributes": {
+                                      "argumentTypes": null,
+                                      "overloadedDeclarations": [
+                                        null
+                                      ],
+                                      "referencedDeclaration": 800,
+                                      "type": "uint256",
+                                      "value": "position"
+                                    },
+                                    "id": 808,
+                                    "name": "Identifier",
+                                    "src": "257:8:2"
+                                  }
+                                ],
+                                "id": 809,
+                                "name": "IndexAccess",
+                                "src": "252:14:2"
+                              }
+                            ],
+                            "id": 810,
+                            "name": "MemberAccess",
+                            "src": "252:21:2"
+                          },
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "overloadedDeclarations": [
+                                null
+                              ],
+                              "referencedDeclaration": 802,
+                              "type": "bool",
+                              "value": "flag"
+                            },
+                            "id": 811,
+                            "name": "Identifier",
+                            "src": "276:4:2"
+                          }
+                        ],
+                        "id": 812,
+                        "name": "Assignment",
+                        "src": "252:28:2"
+                      }
+                    ],
+                    "id": 813,
+                    "name": "ExpressionStatement",
+                    "src": "252:28:2"
+                  },
+                  {
+                    "attributes": {
+                      "functionReturnParameters": 806
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "argumentTypes": null,
+                          "hexvalue": "74727565",
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": true,
+                          "lValueRequested": false,
+                          "subdenomination": null,
+                          "token": "bool",
+                          "type": "bool",
+                          "value": "true"
+                        },
+                        "id": 814,
+                        "name": "Literal",
+                        "src": "298:4:2"
+                      }
+                    ],
+                    "id": 815,
+                    "name": "Return",
+                    "src": "291:11:2"
+                  }
+                ],
+                "id": 816,
+                "name": "Block",
+                "src": "241:69:2"
+              }
+            ],
+            "id": 817,
+            "name": "FunctionDefinition",
+            "src": "176:134:2"
+          },
+          {
+            "attributes": {
+              "documentation": null,
+              "implemented": true,
+              "isConstructor": false,
+              "kind": "function",
+              "modifiers": [
+                null
+              ],
+              "name": "retrieve",
+              "scope": 831,
+              "stateMutability": "view",
+              "superFunction": null,
+              "visibility": "public"
+            },
+            "children": [
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "name": "position",
+                      "scope": 830,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "uint256",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "uint256",
+                          "type": "uint256"
+                        },
+                        "id": 818,
+                        "name": "ElementaryTypeName",
+                        "src": "340:7:2"
+                      }
+                    ],
+                    "id": 819,
+                    "name": "VariableDeclaration",
+                    "src": "340:16:2"
+                  }
+                ],
+                "id": 820,
+                "name": "ParameterList",
+                "src": "339:18:2"
+              },
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "name": "",
+                      "scope": 830,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "bool",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "bool",
+                          "type": "bool"
+                        },
+                        "id": 821,
+                        "name": "ElementaryTypeName",
+                        "src": "378:4:2"
+                      }
+                    ],
+                    "id": 822,
+                    "name": "VariableDeclaration",
+                    "src": "378:4:2"
+                  }
+                ],
+                "id": 823,
+                "name": "ParameterList",
+                "src": "377:6:2"
+              },
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "functionReturnParameters": 823
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "argumentTypes": null,
+                          "isConstant": false,
+                          "isLValue": true,
+                          "isPure": false,
+                          "lValueRequested": false,
+                          "member_name": "isdata",
+                          "referencedDeclaration": 793,
+                          "type": "bool"
+                        },
+                        "children": [
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "isConstant": false,
+                              "isLValue": true,
+                              "isPure": false,
+                              "lValueRequested": false,
+                              "type": "struct Storage.data storage ref"
+                            },
+                            "children": [
+                              {
+                                "attributes": {
+                                  "argumentTypes": null,
+                                  "overloadedDeclarations": [
+                                    null
+                                  ],
+                                  "referencedDeclaration": 798,
+                                  "type": "mapping(uint256 => struct Storage.data storage ref)",
+                                  "value": "hmap"
+                                },
+                                "id": 824,
+                                "name": "Identifier",
+                                "src": "402:4:2"
+                              },
+                              {
+                                "attributes": {
+                                  "argumentTypes": null,
+                                  "overloadedDeclarations": [
+                                    null
+                                  ],
+                                  "referencedDeclaration": 819,
+                                  "type": "uint256",
+                                  "value": "position"
+                                },
+                                "id": 825,
+                                "name": "Identifier",
+                                "src": "407:8:2"
+                              }
+                            ],
+                            "id": 826,
+                            "name": "IndexAccess",
+                            "src": "402:14:2"
+                          }
+                        ],
+                        "id": 827,
+                        "name": "MemberAccess",
+                        "src": "402:21:2"
+                      }
+                    ],
+                    "id": 828,
+                    "name": "Return",
+                    "src": "395:28:2"
+                  }
+                ],
+                "id": 829,
+                "name": "Block",
+                "src": "384:47:2"
+              }
+            ],
+            "id": 830,
+            "name": "FunctionDefinition",
+            "src": "322:109:2"
+          }
+        ],
+        "id": 831,
+        "name": "ContractDefinition",
+        "src": "62:372:2"
+      }
+    ],
+    "id": 832,
+    "name": "SourceUnit",
+    "src": "33:401:2"
+  },
+  "compiler": {
+    "name": "solc",
+    "version": "0.5.16+commit.9c3226ce.Emscripten.clang"
+  },
+  "networks": {
+    "5777": {
+      "events": {},
+      "links": {},
+      "address": "0x8e6EFC093fE7D2494db1A284cB585E2CB73B35Ec",
+      "transactionHash": "0xb6f5f5986cd927945c799d46a2d26953229fb4897bd38c6304dde05138490509"
+    }
+  },
+  "schemaVersion": "3.4.2",
+  "updatedAt": "2021-09-06T10:02:48.955Z",
+  "networkType": "ethereum",
+  "devdoc": {
+    "methods": {}
+  },
+  "userdoc": {
+    "methods": {}
+  }
+}
