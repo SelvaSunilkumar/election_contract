@@ -16,6 +16,6 @@
     "lite-server": "^2.3.0"
   },
   "dependencies": {
-    "solc": "^0.8.6"
+    "solc": "^0.7.6"
   }
 }
