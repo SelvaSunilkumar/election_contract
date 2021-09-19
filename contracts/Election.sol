@@ -213,14 +213,6 @@ contract Election {
         return superAdminLoginLog[encUsernameHash];
     }
 
-    //delete the super admin
-    //the admin to be deleted and the admin deleting the super admin cannot be the same. The admin
-    function deleteSuperAdmin(string memory username, string memory encUsername, string memory superAdminUsername, string memory superAdminEncUsername) public pure returns(uint) {
-        bytes32 superAdminEncUsernameHash = getStringHashedToBytes32(superAdminEncUsername);
-        
-        return 0;
-    }
-
     //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
     //---------------------------------------------------- Election Details ------------------------------------------------------------------------------------------------------------
@@ -277,7 +269,7 @@ contract Election {
     mapping (bytes32 => electionDetails) electionMap;
     mapping (bytes32 => constituencyDetails) constituencyMap;
 
-    function createConstituency(string memory username, string memory encUsername, string memory password, uint userElectionIndex, string memory constituencyId, string memory district, string memory state,string memory constituencyNumber, uint numberOfVoters, string memory date, string memory time) public {
+    function createConstituencyUsingSuperAdmin(string memory username, string memory encUsername, string memory password, uint userElectionIndex, string memory constituencyId, string memory district, string memory state,string memory constituencyNumber, uint numberOfVoters, string memory date, string memory time) public {
         if (authSuperAdmin(username, encUsername, password)) {
             bytes32 adminHash = getStringHashedToBytes32(encUsername);
             bytes32 constituencyIndexHash = getStringHashedToBytes32(constituencyId);
@@ -323,7 +315,7 @@ contract Election {
         }
     }
 
-    function createConstituencyUsingSuperAdmin(string memory username, string memory encUsername, string memory password, string memory electionId, string memory constituencyId,string memory district, string memory state, string memory constituencyNumber, uint numberOfVoters, string memory date, string memory time) public {
+    /*function createConstituencyUsingSuperAdmin(string memory username, string memory encUsername, string memory password, string memory electionId, string memory constituencyId,string memory district, string memory state, string memory constituencyNumber, uint numberOfVoters, string memory date, string memory time) public {
         if (authSuperAdmin(username, encUsername, password)) {
             bytes32 electionIndexHash = getStringHashedToBytes32(electionId);
             bytes32 constituencyIndexHash = getStringHashedToBytes32(constituencyId);
@@ -342,7 +334,7 @@ contract Election {
             eDetails.constituencyStorageHash[cIndex] = constituencyIndexHash;
             eDetails.index += 1;
         }
-    }
+    }*/
 
     function getAllElectionData(string memory username, string memory encUsername, string memory password) public view returns(electionData[] memory) {
         if (authSuperAdmin(username, encUsername, password)) {
@@ -372,10 +364,14 @@ contract Election {
         }
     }
 
-    function getConstituentDetails(string memory username, string memory encUsername, string memory password, string memory electionId, uint electionIndex) public view returns(constituencyData[] memory) {
-        if (authSuperAdmin(username, encUsername, password) && isElectionProvidedUnderAdmin(encUsername, electionId, electionIndex)) {
-            bytes32 electionStorageHash = getStringHashedToBytes32(electionId);
-            electionDetails storage eDetails = electionMap[electionStorageHash];
+    function getConstituentDetails(string memory username, string memory encUsername, string memory password, uint electionIndex) public view returns(constituencyData[] memory) {
+        if (authSuperAdmin(username, encUsername, password)) {
+            bytes32 adminHashValue = getStringHashedToBytes32(encUsername);
+            
+            superAdminForElection storage adminElection = adminForElection[adminHashValue];
+            bytes32 electionAddress = adminElection.electionStorageHash[electionIndex];
+
+            electionDetails storage eDetails = electionMap[electionAddress];
             uint size = eDetails.index;
 
             constituencyData[] memory cData = new constituencyData[](size);
