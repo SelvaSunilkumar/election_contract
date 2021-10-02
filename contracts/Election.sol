@@ -415,6 +415,102 @@ contract Election {
 
     //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+    struct stateDetails {
+        string constitutionId;
+        string state;
+        string district;
+        string constitutionName;
+        string taluk;
+        bool occupied;
+    }
+
+    struct stateInfo {
+        string stateName;
+        uint index;
+    }
+
+    struct state {
+        bool occupied;
+        string stateName;
+        uint statesCount;
+        mapping (uint => string) details;
+    }
+
+    uint numberOfStates = 0;
+    uint numberOfConstituency = 0;
+
+    mapping (uint => string) stateLocationHash;
+    mapping (string => state) stateList;
+    mapping (string => stateDetails) constituencyTable;
+
+    function addConstituencyData(string memory username, string memory encUsername, string memory password, string memory stateId, string memory stateName, string memory constituencyId, string memory district, string memory constitutionName, string memory taluk) public {
+        if (authSuperAdmin(username, encUsername, password) && !constituencyTable[constituencyId].occupied) {
+            state storage stateData = stateList[stateId];
+            if (!stateData.occupied) {
+                stateLocationHash[numberOfStates] = stateId;
+                stateData.occupied = true;
+                numberOfStates += 1;
+            }
+            stateData.stateName = stateName;
+            uint index = stateData.statesCount;
+            stateDetails memory details = stateDetails(constituencyId, stateName, district, constitutionName, taluk, true);
+            stateData.details[index] = constituencyId;
+            constituencyTable[constituencyId] = details;
+            stateData.statesCount += 1;
+            numberOfConstituency += 1;
+        }
+    }
+
+    function isConstituencyIdOccupied(string memory username, string memory encUsername, string memory password, string memory constituencyId) public view returns(bool) {
+        if (authSuperAdmin(username, encUsername, password)) {
+            stateDetails memory details = constituencyTable[constituencyId];
+            return details.occupied;
+        } else {
+            return false;
+        }
+    }
+
+    function getStateList(string memory username, string memory encUsername, string memory password) public view returns(stateInfo[] memory) {
+        if (authSuperAdmin(username, encUsername, password)) {
+            stateInfo[] memory stateArray = new stateInfo[](numberOfStates);
+            for (uint i = 0; i < numberOfStates; i++) {
+                string memory stateLocationAddress = stateLocationHash[i];
+                state storage stateData = stateList[stateLocationAddress];
+                stateArray[i].stateName = stateData.stateName;
+                stateArray[i].index = i;
+            }
+            return stateArray;
+        } else {
+            stateInfo[] memory data = new stateInfo[](0);
+            return data;
+        }
+    }
+
+    function getCorresspondingStateList(string memory username, string memory encUsername, string memory password, uint index) public view returns(stateDetails[] memory) {
+        if (authSuperAdmin(username, encUsername, password)) {
+            string memory stateAddress = stateLocationHash[index];
+            state storage stateData = stateList[stateAddress];
+            uint size = stateData.statesCount;
+            stateDetails[] memory stateArray = new stateDetails[](size);
+            for (uint i = 0; i < size; i++) {
+                string memory id = stateData.details[i];
+                stateArray[i] = constituencyTable[id];
+            }
+            return stateArray;
+        } else {
+            stateDetails[] memory data = new stateDetails[](0);
+            return data;
+        }
+    }
+
+    function getCorrespondingConstituencyDetail(string memory username, string memory encUsername, string memory password, string memory constituencyId) public view returns(stateDetails memory) {
+        if (authSuperAdmin(username, encUsername, password)) {
+            return constituencyTable[constituencyId];
+        }
+    }
+
+    //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
     function getStringHashedToBytes32(string memory toBeHashedString) private pure returns(bytes32) {
         return sha256(abi.encodePacked(toBeHashedString));
     }
