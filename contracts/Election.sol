@@ -128,6 +128,16 @@ contract Election {
         return 100;
     }
 
+    function authSuperAdminEnc(string memory username) public view returns(bool) {
+        bytes32 usernameHash = getStringHashedToBytes32(username);
+
+        superAdmin memory authAdmin = superAdminHashmap[usernameHash];
+        if (authAdmin.encUsername == usernameHash) {
+            return true;
+        }
+        return false;
+    }
+
     function authSuperAdmin(string memory username, string memory encUsername, string memory password) public view returns(bool) {
         bytes32 usernameHash = getStringHashedToBytes32(encUsername);
         bytes32 passwordHash = getStringHashedToBytes32(password);
@@ -269,7 +279,7 @@ contract Election {
     mapping (bytes32 => electionDetails) electionMap;
     mapping (bytes32 => constituencyDetails) constituencyMap;
 
-    function createConstituencyUsingSuperAdmin(string memory username, string memory encUsername, string memory password, uint userElectionIndex, string memory constituencyId, string memory district, string memory state,string memory constituencyNumber, uint numberOfVoters, string memory date, string memory time) public {
+    function createConstituencyUsingSuperAdmin(string memory username, string memory encUsername, string memory password, uint userElectionIndex, string memory constituencyId, string memory district, string memory stateName,string memory constituencyNumber, uint numberOfVoters, string memory date, string memory time) public {
         if (authSuperAdmin(username, encUsername, password)) {
             bytes32 adminHash = getStringHashedToBytes32(encUsername);
             bytes32 constituencyIndexHash = getStringHashedToBytes32(constituencyId);
@@ -282,7 +292,7 @@ contract Election {
             uint cIndex = eDetails.index;
             constituencyDetails storage cDetails = constituencyMap[constituencyIndexHash];
             cDetails.district = district;
-            cDetails.state = state;
+            cDetails.state = stateName;
             cDetails.constituencyNumber = constituencyNumber;
             cDetails.numberOfVoters = numberOfVoters;
             cDetails.dateOfElection = date;
@@ -294,7 +304,7 @@ contract Election {
         }
     }
 
-    function createElectionUsingSuperAdmin(string memory username, string memory encUsername, string memory password, string memory electionId ,string memory electionAlias, string memory year, string memory typeOfElection, string memory date, uint numberOfConstituency) public {
+    function createElectionUsingSuperAdmin(string memory username, string memory encUsername, string memory password, string memory electionId ,string memory electionAlias, string memory year, string memory typeOfElection, string memory date, uint numberOfConstituencyT) public {
         if (authSuperAdmin(username, encUsername, password)) {
             bytes32 adminHashValue = getStringHashedToBytes32(encUsername);
             bytes32 electionIdHashValue = getStringHashedToBytes32(electionId);
@@ -305,7 +315,7 @@ contract Election {
             eDetails.year = year;
             eDetails.date = date;
             eDetails.typeOfConstituency = typeOfElection;
-            eDetails.numberOfConstituency = numberOfConstituency;
+            eDetails.numberOfConstituency = numberOfConstituencyT;
             eDetails.flag = true;
 
             superAdminForElection storage adminElection = adminForElection[adminHashValue];
@@ -381,13 +391,13 @@ contract Election {
                 constituencyDetails storage cDetails = constituencyMap[constituencyAddress];
 
                 string memory district = cDetails.district;
-                string memory state = cDetails.state;
+                string memory stateName = cDetails.state;
                 string memory constituencyNumber = cDetails.constituencyNumber;
                 uint numberOfVoters = cDetails.numberOfVoters;
                 string memory dateOfElection = cDetails.dateOfElection;
                 string memory time = cDetails.time;
 
-                constituencyData memory data = constituencyData(district, state, constituencyNumber, numberOfVoters, dateOfElection, time);
+                constituencyData memory data = constituencyData(district, stateName, constituencyNumber, numberOfVoters, dateOfElection, time);
                 cData[i] = data;
             }
 
@@ -507,6 +517,74 @@ contract Election {
         if (authSuperAdmin(username, encUsername, password)) {
             return constituencyTable[constituencyId];
         }
+        revert("Not Found");
+    }
+
+    //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+    
+    struct voter {
+        string aadharNumber;
+        string password;
+        string voterId;
+        string name;
+        string dateOfBirth;
+        string constituencyId;
+        string contactNumber;
+        string emailAddress;
+        string residentialAddress;
+        bool occupied;
+    }
+
+    struct individualVoterData {
+        string aadharNumber;
+        string voterId;
+        string name;
+        string dateOfBirth;
+        string state;
+        string district;
+        string taluk;
+        string constituencyId;
+        string residentialAddress;
+    }
+
+    struct constituencyVoters {
+        uint numberOfVoters;
+        mapping (uint => string) voter;
+    }
+
+    mapping(string => constituencyVoters) votersList;
+    mapping(string => voter) votersTable;
+
+    function addVoterDetails(string memory encUsername, string memory aadharNumber, string memory password, string memory voterId, string memory name, string memory dateOfBirth, string memory constituencyId, string memory contactNumber, string memory emailAddress, string memory residentialAddress) public {
+        if (authSuperAdminEnc(encUsername)) {
+            voter memory voterData = voter(aadharNumber, password, voterId, name, dateOfBirth, constituencyId, contactNumber, emailAddress, residentialAddress, true);
+            votersTable[voterId] = voterData;
+            constituencyVoters storage list = votersList[constituencyId];
+            uint size = list.numberOfVoters;
+            list.voter[size] = voterId;
+            list.numberOfVoters += 1;
+        }
+    }
+
+    function getIndividualVoterDetail(string memory username, string memory encUsername, string memory password, string memory voterId) public view returns(individualVoterData memory) {
+        if (authSuperAdmin(username, encUsername, password) && votersTable[voterId].occupied) {
+            voter memory voterData = votersTable[voterId];
+            string memory aadharNumber = voterData.aadharNumber;
+            string memory name = voterData.name;
+            string memory dateOfBirth = voterData.dateOfBirth;
+            
+            string memory constituencyId = voterData.constituencyId;
+            stateDetails memory stateData = constituencyTable[constituencyId];
+
+            string memory stateName = stateData.state;
+            string memory district = stateData.district;
+            string memory taluk = stateData.taluk;
+            string memory residentialAddress = voterData.residentialAddress;
+
+            individualVoterData memory data = individualVoterData(aadharNumber, voterId, name, dateOfBirth, stateName, district, taluk, constituencyId, residentialAddress);
+            return data;
+        }
+        revert("Not found");
     }
 
     //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
