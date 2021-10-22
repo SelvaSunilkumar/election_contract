@@ -42,7 +42,7 @@ contract Election {
     mapping(bytes32 => string) private superAdminLoginLog;
 
     //get all details of Super admins
-    function getAllSuperAdminDetails(string memory encUsername) public view returns(superAdmin[] memory) {
+    /*function getAllSuperAdminDetails(string memory encUsername) public view returns(superAdmin[] memory) {
 
         if (isSuperAdminUsernameTaken(encUsername)) {
             superAdmin[] memory allDetails = new superAdmin[](numberOfSuperAdmins);
@@ -54,7 +54,7 @@ contract Election {
             superAdmin[] memory allDetails = new superAdmin[](0);
             return allDetails;
         }
-    }
+    }*/
 
     //add super admin credentials into table by hashing proper credentials
     function addSuperAdmin(superAdminDetails memory adminDetails, string memory adminHashCode) private{
@@ -72,11 +72,11 @@ contract Election {
         }
     }
 
-    function storeSuperAdminAtPosition(superAdmin memory adminData, string memory encUsername) private {
+    /*function storeSuperAdminAtPosition(superAdmin memory adminData, string memory encUsername) private {
         bytes32 usernameHash = getStringHashedToBytes32(encUsername);
 
         superAdminHashmap[usernameHash] = adminData;
-    }
+    }*/
 
     //checks the hashmap, wheather admin details is present already
     function isSuperAdminPresent(superAdmin memory adminDetails, string memory encUsername) private view returns(bool) {
@@ -152,7 +152,7 @@ contract Election {
     }
 
     //edit super admin details as a whole, which includes Name, Email id, Password
-    function editSuperAdminAllDetails(string memory name, string memory emailId, string memory encUsername, string memory password) public {
+    /*function editSuperAdminAllDetails(string memory name, string memory emailId, string memory encUsername, string memory password) public {
         bytes32 usernameHash = getStringHashedToBytes32(encUsername);
         bytes32 passwordHash = getStringHashedToBytes32(password);
         superAdmin memory sAdmin = superAdminHashmap[usernameHash];
@@ -198,7 +198,7 @@ contract Election {
     function getSuperAdminDetails(string memory encUsername) public view returns(superAdmin memory) {
         bytes32 usernameHash = getStringHashedToBytes32(encUsername);
         return superAdminHashmap[usernameHash];
-    }
+    }*/
 
     //function to create Default Super Admin
     function defaultSuperAdmin(string memory name, string memory emailId, string memory username, string memory encUsername, string memory password) public {
@@ -635,6 +635,7 @@ contract Election {
         string electionId;
         string year;
         string dateOfElection;
+        uint numberOfConstituency;
     }
 
     struct adminAssociatedElection {
@@ -642,8 +643,14 @@ contract Election {
         mapping (uint => string) electionId;
     }
 
+    struct constituencyElection {
+        uint numberOfElection;
+        mapping (uint => string) electionList;
+    }
+
     mapping (string => election) electionTable;
     mapping (bytes32 => adminAssociatedElection) adminElection;
+    mapping (string => constituencyElection) electionConstituencyTable;
 
     function createElection(string memory username, string memory encUsername, string memory password, string memory electionAlias, string memory electionId, string memory year, string memory dateOfElection) public {
         if (authSuperAdmin(username, encUsername, password)) {
@@ -674,11 +681,12 @@ contract Election {
             for (uint index = 0; index < numberOfElections; index++) {
                 string memory electionIndex = associatedElection.electionId[index];
                 election storage electionData = electionTable[electionIndex];
-                electionDetail memory eDetail = electionDetail(electionData.electionAlias, electionData.electionId, electionData.year, electionData.dateOfElection);
+                electionDetail memory eDetail = electionDetail(electionData.electionAlias, electionData.electionId, electionData.year, electionData.dateOfElection, electionData.numberOfConstituency);
                 detail[index] = eDetail;
             }
             return detail;
         }
+        revert("invalid authentication");
     }
 
     function addElectionConstitution(string memory username, string memory encUsername, string memory password, string memory electionId, string memory constituencyId) public {
@@ -687,6 +695,11 @@ contract Election {
             uint indexOfConstituency = electionData.numberOfConstituency;
             electionData.constituencyAddress[indexOfConstituency] = constituencyId;
             electionData.numberOfConstituency += 1;
+
+            constituencyElection storage cElection = electionConstituencyTable[constituencyId];
+            uint numberOfConstituencyElection = cElection.numberOfElection;
+            cElection.electionList[numberOfConstituencyElection] = electionId;
+            cElection.numberOfElection += 1;
         }
     }
 
@@ -703,6 +716,7 @@ contract Election {
             }
             return details;
         }
+        revert("invalid authentication");
     }
 
     //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
